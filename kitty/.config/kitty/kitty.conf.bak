@@ -1,0 +1,19 @@
+background_opacity 0.8
+window_padding_width 15
+
+tab_bar_edge top
+tab_bar_margin_width 1.0
+tab_bar_margin_height 1.0 1.0
+tab_bar_style fade
+
+# BEGIN_KITTY_THEME
+# Catppuccin-Mocha
+include current-theme.conf
+# END_KITTY_THEME
+
+# BEGIN_KITTY_FONTS
+font_family      family="JetBrainsMono Nerd Font"
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+# END_KITTY_FONTS

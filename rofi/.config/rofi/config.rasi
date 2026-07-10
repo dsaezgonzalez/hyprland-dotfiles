@@ -1,0 +1,81 @@
+/**
+ * Final Terminal-Waybar Hybrid Rofi Theme
+ * Sharp white text, Waybar pale-blue selection highlight
+ */
+
+configuration {
+    modi:                       "drun,run";
+    show-icons:                 false;
+    display-drun:               ">";
+    display-run:                ">";
+    drun-display-format:        "{name}";
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+@theme "~/.config/rofi/colors.rasi"
+
+* {
+    background-color:           transparent;
+    text-color:                 @white;
+}
+
+window {
+    width:                      600px;
+    fixed-height:               true;
+    transparency:               "real";
+    background-color:           @bg;
+    border-radius:              14px;
+    border:                     2px;
+    border-color:               @accent;
+}
+
+mainbox {
+    padding:                    25px;
+    children:                   [ "inputbar", "listview" ];
+}
+
+inputbar {
+    spacing:                    10px;
+    padding:                    0px 0px 15px 0px;
+    children:                   [ "prompt", "entry" ];
+}
+
+prompt {
+    text-color:                 @accent;
+    font:                       "JetBrainsMono Nerd Font Bold 12";
+}
+
+entry {
+    placeholder:                "search...";
+    placeholder-color:          #666666;
+    text-color:                 @white;
+}
+
+listview {
+    columns:                    1;
+    lines:                      10;
+    fixed-height:               true;
+    spacing:                    4px;
+}
+
+element {
+    padding:                    8px 12px;
+    border-radius:              8px;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color:           transparent;
+    text-color:                 @white;
+}
+
+element selected.normal {
+    /* Highlighted app uses the Waybar pale blue */
+    background-color:           @selection-bg;
+    text-color:                 @black;
+}
+
+element-text {
+    vertical-align:             0.5;
+    text-color:                 inherit;
+}

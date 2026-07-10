@@ -1,0 +1,96 @@
+# This config is a STUB! This should never be generated.
+# Use the default lua config from https://github.com/hyprwm/Hyprland/blob/main/example/hyprland.lua
+
+splash = false
+
+$mainMod = SUPER
+$terminal = kitty
+$fileManager = nemo
+$menu = rofi -show drun
+$screenshotRegionClipboard = hyprshot -m region --clipboard-only -s
+$screenshotActiveClipboard = hyprshot -m window --clipboard-only -s
+$screenshotOutputClipboard = hyprshot -m output --clipboard-only -s
+$screenshotRegion = hyprshot -m region -o ~/Pictures/Images/ -s 
+$screenshotActive= hyprshot -m window -o ~/Pictures/Images/ -s 
+$screenshotOutput = hyprshot -m output -o ~/Pictures/Images/ -s 
+
+env = GTK_THEME,Adwaita:dark
+
+# Start-up
+exec-once = hyprpaper
+exec-once = ~/.config/quickshell/launch.sh
+
+# Shortcuts
+bind = $mainMod, Q, exec, $terminal
+bind = $mainMod, C, killactive,
+bind = $mainMod, M, exec, command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit
+bind = $mainMod, E, exec, $fileManager
+bind = $mainMod, T, togglefloating,
+bind = $mainMod, R, exec, $menu
+bind = $mainMod SHIFT, P, exec, ~/.config/quickshell/launch.sh
+
+# Move focus
+bind = $mainMod, left, movefocus, l
+bind = $mainMod, right, movefocus, r
+bind = $mainMod, up, movefocus, u
+bind = $mainMod, down, movefocus, d
+# Move windows around
+bind = $mainMod SHIFT, left, movewindow, l
+bind = $mainMod SHIFT, right, movewindow, r
+bind = $mainMod SHIFT, up, movewindow, u
+bind = $mainMod SHIFT, down, movewindow, d
+# Switch workspaces
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+bind = $mainMod, 6, workspace, 6
+bind = $mainMod, 7, workspace, 7
+bind = $mainMod, 8, workspace, 8
+bind = $mainMod, 9, workspace, 9
+bind = $mainMod, mouse_down, workspace, -1
+bind = $mainMod, mouse_up, workspace, +1
+# Move windows to workspaces
+bind = $mainMod SHIFT, 1, movetoworkspace, 1
+bind = $mainMod SHIFT, 2, movetoworkspace, 2
+bind = $mainMod SHIFT, 3, movetoworkspace, 3
+bind = $mainMod SHIFT, 4, movetoworkspace, 4
+bind = $mainMod SHIFT, 5, movetoworkspace, 5
+bind = $mainMod SHIFT, 6, movetoworkspace, 6
+bind = $mainMod SHIFT, 7, movetoworkspace, 7
+bind = $mainMod SHIFT, 8, movetoworkspace, 8
+bind = $mainMod SHIFT, 9, movetoworkspace, 9
+
+#Move and Resize windows
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+
+#Screenshots
+bind = $mainMod SHIFT, S, exec, $screenshotRegionClipboard
+bind = $mainMod SHIFT, A, exec, $screenshotOutputClipboard
+bind = $mainMod SHIFT, W, exec, $screenshotActiveClipboard
+bind = ALT SHIFT, S, exec, $screenshotRegion
+bind = ALT SHIFT, A, exec, $screenshotOutput
+bind = ALT SHIFT, W, exec, $screenshotActive
+
+# Window styling
+general{
+   gaps_in = 5
+   gaps_out = 8
+
+   border_size = 2
+
+   col.active_border = rgb(012491)
+   col.inactive_border = rgb(DFEEFC)
+}
+decoration{
+   rounding = 14
+   rounding_power = 2
+}
+
+# Window rules
+windowrule = opacity 1.0 override 1.0 override, match:class (?i)nemo
+
+#Refresh rate
+monitor=DP-1,2560x1440@180,0x0,1

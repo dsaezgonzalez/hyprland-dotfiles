@@ -1,0 +1,26 @@
+[manager]
+cwd = { fg = "#9FD0DD", bold = true }
+hovered = { bg = "#7197CB", fg = "#242835" }
+tab_active = { bg = "#9FD0DD", fg = "#242835" }
+tab_inactive = { bg = "#242835", fg = "#F5F7F6" }
+border_style = { fg = "#7197CB" }
+
+[status]
+mode_normal = { bg = "#9FD0DD", fg = "#242835", bold = true }
+mode_select = { bg = "#7197CB", fg = "#242835", bold = true }
+mode_unset  = { bg = "#7197CB", fg = "#242835", bold = true }
+progress_normal = { fg = "#9FD0DD", bg = "#242835" }
+progress_error  = { fg = "#7197CB", bg = "#242835" }
+
+[input]
+border = { fg = "#9FD0DD" }
+selected = { bg = "#7197CB", fg = "#242835" }
+
+[select]
+border = { fg = "#9FD0DD" }
+active = { fg = "#7197CB", bold = true }
+
+[filetype]
+rules = [
+    { mime = "inode/directory", fg = "#9FD0DD" }
+]

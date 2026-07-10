@@ -1,0 +1,35 @@
+[opener]
+code = [
+	{ run = 'code "$@"', orphan = true, desc = "VS Code" }
+]
+
+[open]
+prepend_rules = [
+	{ mime = "text/*", use = "code" },
+	{ mime = "application/json", use = "code" },
+	{ mime = "application/javascript", use = "code" },
+	{ mime = "application/x-sh", use = "code" },
+	{ mime = "application/x-bash", use = "code" },
+	{ mime = "application/x-desktop", use = "code" },
+	{ url = "*.json", use = "code" },
+	{ url = "*.toml", use = "code" },
+	{ url = "*.yaml", use = "code" },
+	{ url = "*.yml", use = "code" },
+	{ url = "*.md", use = "code" },
+	{ url = "*.lua", use = "code" },
+	{ url = "*.py", use = "code" },
+	{ url = "*.js", use = "code" },
+	{ url = "*.ts", use = "code" },
+	{ url = "*.tsx", use = "code" },
+	{ url = "*.jsx", use = "code" },
+	{ url = "*.css", use = "code" },
+	{ url = "*.html", use = "code" },
+	{ url = "*.sh", use = "code" },
+	{ url = "*.conf", use = "code" }
+]
+
+[plugin]
+prepend_previewers = [
+	{ url = "*.md", run = "glow" }
+]
+
