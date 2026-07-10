@@ -1,0 +1,6 @@
+bambustudio-bin
+google-chrome
+hyprmod
+sidra-bin
+visual-studio-code-bin
+xdg-desktop-portal-termfilechooser-hunkyburrito-git
