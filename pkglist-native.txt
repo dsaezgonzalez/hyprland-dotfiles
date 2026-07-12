@@ -160,7 +160,6 @@ shelly
 smartmontools
 sof-firmware
 starship
-steam
 stow
 sudo
 sysfsutils
