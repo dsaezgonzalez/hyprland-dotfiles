@@ -389,7 +389,7 @@ PanelWindow {
 
     Process {
         id: wallpaperScanner
-        command: ["find", "/home/diego/.local/share/wallpapers", "-type", "f", "-iregex", ".*\\.\\(jpg\\|jpeg\\|png\\|webp\\)"]
+        command: ["find", "/home/diego/.local/share/wallpapers/", "-type", "f", "-iregex", ".*\\.\\(jpg\\|jpeg\\|png\\|webp\\)"]
         running: true
         stdout: SplitParser {
             onRead: (line) => {

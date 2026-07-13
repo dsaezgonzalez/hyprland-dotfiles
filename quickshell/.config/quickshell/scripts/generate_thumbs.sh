@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 CACHE_DIR="$HOME/.cache/qs-themes"
-WALLPAPER_DIR="$HOME/.local/share/wallpapers"
+WALLPAPER_DIR="$HOME/.local/share/wallpapers/"
 
 mkdir -p "$CACHE_DIR"
 
