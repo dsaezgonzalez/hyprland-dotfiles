@@ -24,14 +24,17 @@ FOREGROUND=$(echo "$JSON" | jq -r '.foreground')
 ACCENT_NO_HASH=${ACCENT#\#}
 SECONDARY_NO_HASH=${SECONDARY#\#}
 
+# Get the active monitor dynamically so this works on both laptop (eDP-1) and desktop (DP-1)
+MONITOR=$(hyprctl monitors -j | jq -r '.[0].name')
+
 # 2. Set Wallpaper (live)
-hyprctl hyprpaper wallpaper "DP-1,$WALLPAPER,cover"
+hyprctl hyprpaper wallpaper "$MONITOR,$WALLPAPER,cover"
 
 # 2.5 Persist Wallpaper to hyprpaper.conf
 cat > ~/.config/hypr/hyprpaper.conf <<EOF
 splash = false
 wallpaper {
-    monitor = DP-1
+    monitor = $MONITOR
     path = $WALLPAPER
     fit_mode = cover
 }
