@@ -44,6 +44,35 @@ PanelWindow {
     property bool sinkMuted: false
     property int sourceVol: 0
     property bool sourceMuted: false
+    
+    // OSD properties
+    property bool volOsdVisible: false
+    property bool _osdInitialized: false
+    
+    Timer {
+        id: osdTimer
+        interval: 1500
+        onTriggered: window.volOsdVisible = false
+    }
+    
+    onSinkVolChanged: {
+        if (window._osdInitialized) {
+            window.volOsdVisible = true;
+            osdTimer.restart();
+        }
+    }
+    onSinkMutedChanged: {
+        if (window._osdInitialized) {
+            window.volOsdVisible = true;
+            osdTimer.restart();
+        }
+    }
+    
+    Timer {
+        interval: 1000
+        running: true
+        onTriggered: window._osdInitialized = true
+    }
 
     // Network properties
     property string netType: "disconnected"
@@ -531,7 +560,7 @@ PanelWindow {
             color: window.notifyVisible ? "#b01a0a0d" : Qt.alpha(window.themeBackground, 0.69)
             border.width: 1
             border.color: window.notifyVisible ? "#ff605c" : window.themeAccent
-            implicitWidth: window.notifyVisible ? Math.min(500, notifyRow.implicitWidth + 24) : (clockRow.implicitWidth + 24)
+            implicitWidth: window.notifyVisible ? Math.min(500, notifyRow.implicitWidth + 24) : (window.volOsdVisible ? (volOsdRow.implicitWidth + 30) : (clockRow.implicitWidth + 24))
             
             Behavior on color { ColorAnimation { duration: 300 } }
             Behavior on border.color { ColorAnimation { duration: 300 } }
@@ -551,7 +580,7 @@ PanelWindow {
                 id: clockRow
                 anchors.centerIn: parent
                 spacing: 8
-                opacity: window.notifyVisible ? 0 : 1
+                opacity: (window.notifyVisible || window.volOsdVisible) ? 0 : 1
                 visible: opacity > 0
                 
                 Behavior on opacity {
@@ -585,6 +614,69 @@ PanelWindow {
                             clockText.currentTime = Qt.formatDateTime(new Date(), "hh:mm  dd MMM yyyy")
                         }
                     }
+                }
+            }
+
+            Row {
+                id: volOsdRow
+                anchors.centerIn: parent
+                spacing: 12
+                opacity: (window.volOsdVisible && !window.notifyVisible) ? 1 : 0
+                visible: opacity > 0
+                
+                Behavior on opacity {
+                    NumberAnimation { duration: 250 }
+                }
+                
+                Item {
+                    width: 20
+                    height: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                    
+                    Image {
+                        id: osdVolIconImg
+                        anchors.fill: parent
+                        sourceSize.width: 20
+                        sourceSize.height: 20
+                        source: window.sinkMuted ? "icons/volume-mute.svg" : (window.sinkVol < 30 ? "icons/volume-low.svg" : (window.sinkVol < 70 ? "icons/volume-med.svg" : "icons/volume-high.svg"))
+                        visible: false
+                    }
+                    
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: osdVolIconImg
+                        color: window.themeAccent
+                    }
+                }
+                
+                Rectangle {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 120
+                    height: 6
+                    radius: 3
+                    color: Qt.alpha(window.themeAccent, 0.2)
+                    
+                    Rectangle {
+                        width: Math.max(0, Math.min(120, (window.sinkVol / 100) * 120))
+                        height: 6
+                        radius: 3
+                        color: window.themeAccent
+                        
+                        Behavior on width {
+                            NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+                        }
+                    }
+                }
+                
+                Text {
+                    text: window.sinkVol + "%"
+                    color: "#ffffff"
+                    font.family: "JetBrainsMono Nerd Font"
+                    font.pixelSize: 13
+                    font.bold: true
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 35
+                    horizontalAlignment: Text.AlignRight
                 }
             }
 
@@ -867,12 +959,25 @@ PanelWindow {
                                 font.pixelSize: 13
                             }
                             
-                            Text {
-                                text: window.sourceMuted ? "" : ""
-                                color: window.sourceMuted ? "#ff605c" : window.themeAccent
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 13
-                                font.bold: true
+                            Item {
+                                width: 14
+                                height: 14
+                                anchors.verticalCenter: parent.verticalCenter
+                                
+                                Image {
+                                    id: micIconImg
+                                    anchors.fill: parent
+                                    source: window.sourceMuted ? "icons/microphone-slash.svg" : "icons/microphone.svg"
+                                    sourceSize: Qt.size(14, 14)
+                                    smooth: true
+                                    visible: false
+                                }
+                                
+                                ColorOverlay {
+                                    anchors.fill: parent
+                                    source: micIconImg
+                                    color: window.sourceMuted ? "#ff605c" : window.themeAccent
+                                }
                             }
                         }
                         
@@ -915,16 +1020,29 @@ PanelWindow {
                             spacing: 6
                             anchors.verticalCenter: parent.verticalCenter
                             
-                            Text {
-                                text: {
-                                    if (window.netType === "wifi") return "";
-                                    if (window.netType === "ethernet") return "";
-                                    return "⚠";
+                            Item {
+                                width: 14
+                                height: 14
+                                anchors.verticalCenter: parent.verticalCenter
+                                
+                                Image {
+                                    id: netIconImg
+                                    anchors.fill: parent
+                                    source: {
+                                        if (window.netType === "wifi") return "icons/wifi.svg";
+                                        if (window.netType === "ethernet") return "icons/network-wired.svg";
+                                        return "icons/exclamation-triangle.svg";
+                                    }
+                                    sourceSize: Qt.size(14, 14)
+                                    smooth: true
+                                    visible: false
                                 }
-                                color: (window.netType === "wifi" || window.netType === "ethernet") ? window.themeAccent : "#ff605c"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 13
-                                font.bold: true
+                                
+                                ColorOverlay {
+                                    anchors.fill: parent
+                                    source: netIconImg
+                                    color: (window.netType === "wifi" || window.netType === "ethernet") ? window.themeAccent : "#ff605c"
+                                }
                             }
                             
                             Text {
