@@ -117,6 +117,15 @@ PanelWindow {
     property var wallpaperList: []
     property string activeWallpaper: ""
 
+    // Laptop properties
+    property bool laptopBatteryExists: false
+    property int laptopBatteryPercent: 0
+    property string laptopBatteryState: "Unknown"
+    property bool laptopBrightnessExists: false
+    property int laptopBrightnessPercent: 0
+    property bool laptopPowerProfileExists: false
+    property string laptopPowerProfileCurrent: "balanced"
+
     // Clipboard properties
     property bool clipboardOpen: false
     property var clipboardList: []
@@ -295,6 +304,37 @@ PanelWindow {
                 }
             }
         }
+    }
+
+    Process {
+        id: laptopProcess
+        command: ["/usr/bin/python3", "-u", "/home/diego/.config/quickshell/scripts/qs_laptop_status.py"]
+        running: true
+        stdout: SplitParser {
+            onRead: (line) => {
+                try {
+                    let data = JSON.parse(line);
+                    window.laptopBatteryExists = data.battery.exists;
+                    window.laptopBatteryPercent = data.battery.percent;
+                    window.laptopBatteryState = data.battery.state;
+                    window.laptopBrightnessExists = data.brightness.exists;
+                    window.laptopBrightnessPercent = data.brightness.percent;
+                    window.laptopPowerProfileExists = data.power_profile.exists;
+                    window.laptopPowerProfileCurrent = data.power_profile.current;
+                } catch(e) {
+                    console.log("Error parsing laptop json:", e);
+                }
+            }
+        }
+    }
+
+    Timer {
+        id: laptopTimer
+        interval: 3000
+        running: true
+        repeat: true
+        triggeredOnStart: false
+        onTriggered: laptopProcess.running = true
     }
 
     Process {
@@ -1069,6 +1109,53 @@ PanelWindow {
                         }
                     }
 
+                    // Separator line for network and battery
+                    Rectangle {
+                        width: 1
+                        height: 16
+                        color: "#33ffffff"
+                        anchors.verticalCenter: parent.verticalCenter
+                        visible: window.laptopBatteryExists
+                    }
+
+                    // Battery
+                    Item {
+                        width: batContentRow.implicitWidth
+                        height: 22
+                        anchors.verticalCenter: parent.verticalCenter
+                        visible: window.laptopBatteryExists
+                        
+                        Row {
+                            id: batContentRow
+                            spacing: 6
+                            anchors.verticalCenter: parent.verticalCenter
+                            
+                            Text {
+                                text: {
+                                    if (window.laptopBatteryState === "Charging") return "";
+                                    if (window.laptopBatteryPercent > 80) return "";
+                                    if (window.laptopBatteryPercent > 60) return "";
+                                    if (window.laptopBatteryPercent > 40) return "";
+                                    if (window.laptopBatteryPercent > 20) return "";
+                                    return "";
+                                }
+                                color: (window.laptopBatteryPercent < 20 && window.laptopBatteryState !== "Charging") ? "#ff605c" : window.themeAccent
+                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 15
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            
+                            Text {
+                                text: window.laptopBatteryPercent + "%"
+                                color: "#ffffff"
+                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 13
+                                font.bold: true
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                        }
+                    }
+
                     // Separator line for status icons
                     Rectangle {
                         width: 1
@@ -1579,6 +1666,85 @@ PanelWindow {
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
+                    
+                    Row {
+                        width: parent.width
+                        height: 24
+                        spacing: 10
+                        visible: window.laptopBrightnessExists
+                        
+                        Item {
+                            width: 24
+                            height: 24
+                            anchors.verticalCenter: parent.verticalCenter
+                            
+                            Text {
+                                text: ""
+                                color: "white"
+                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 16
+                                anchors.centerIn: parent
+                            }
+                        }
+                        
+                        Item {
+                            id: brightnessSlider
+                            width: 190
+                            height: 20
+                            anchors.verticalCenter: parent.verticalCenter
+                            
+                            property real val: window.laptopBrightnessPercent / 100
+                            
+                            Rectangle {
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.verticalCenter: parent.verticalCenter
+                                height: 4
+                                radius: 2
+                                color: "#33ffffff"
+                                
+                                Rectangle {
+                                    anchors.left: parent.left
+                                    height: parent.height
+                                    width: parent.width * brightnessSlider.val
+                                    radius: 2
+                                    color: window.themeAccent
+                                }
+                            }
+                            
+                            Rectangle {
+                                width: 12
+                                height: 12
+                                radius: 6
+                                color: "#ffffff"
+                                anchors.verticalCenter: parent.verticalCenter
+                                x: (190 - width) * brightnessSlider.val
+                            }
+                            
+                            MouseArea {
+                                anchors.fill: parent
+                                
+                                function updateValue(mouse) {
+                                    let v = Math.max(0, Math.min(1, mouse.x / width));
+                                    let pct = Math.round(v * 100);
+                                    window.laptopBrightnessPercent = pct;
+                                    Quickshell.execDetached(["/usr/bin/python3", "/home/diego/.config/quickshell/scripts/qs_laptop_control.py", "brightness", pct.toString()]);
+                                }
+                                
+                                onPressed: updateValue(mouse)
+                                onPositionChanged: updateValue(mouse)
+                            }
+                        }
+                        
+                        Text {
+                            text: window.laptopBrightnessPercent + "%"
+                            color: "#cccccc"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 13
+                            font.bold: true
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
                 }
                 
                 Rectangle {
@@ -1644,6 +1810,62 @@ PanelWindow {
                     width: parent.width
                     height: 1
                     color: "#22ffffff"
+                }
+                
+                Row {
+                    width: parent.width
+                    spacing: 12
+                    visible: window.laptopPowerProfileExists
+                    
+                    Text {
+                        text: "Power Profile:"
+                        color: "#cccccc"
+                        font.family: "JetBrainsMono Nerd Font"
+                        font.pixelSize: 12
+                        font.bold: true
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    
+                    Rectangle {
+                        width: 150
+                        height: 24
+                        radius: 12
+                        color: "#22ffffff"
+                        
+                        Text {
+                            anchors.centerIn: parent
+                            text: {
+                                if (window.laptopPowerProfileCurrent === "power-saver") return " Power Saver";
+                                if (window.laptopPowerProfileCurrent === "balanced") return " Balanced";
+                                return " Performance";
+                            }
+                            color: "white"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 12
+                            font.bold: true
+                        }
+                        
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                let nextP = "balanced";
+                                if (window.laptopPowerProfileCurrent === "power-saver") nextP = "balanced";
+                                else if (window.laptopPowerProfileCurrent === "balanced") nextP = "performance";
+                                else if (window.laptopPowerProfileCurrent === "performance") nextP = "power-saver";
+                                
+                                window.laptopPowerProfileCurrent = nextP;
+                                Quickshell.execDetached(["/usr/bin/python3", "/home/diego/.config/quickshell/scripts/qs_laptop_control.py", "profile", nextP]);
+                            }
+                        }
+                    }
+                }
+                
+                Rectangle {
+                    width: parent.width
+                    height: 1
+                    color: "#22ffffff"
+                    visible: window.laptopPowerProfileExists
                 }
                 
                 Grid {
