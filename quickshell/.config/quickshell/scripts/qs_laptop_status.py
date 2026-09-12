@@ -34,13 +34,14 @@ try:
 except Exception:
     pass
 
-# 3. Power profile
-try:
-    ppd = subprocess.run(["powerprofilesctl", "get"], capture_output=True, text=True)
-    if ppd.returncode == 0:
-        data["power_profile"]["current"] = ppd.stdout.strip()
-        data["power_profile"]["exists"] = True
-except Exception:
-    pass
+# 3. Power profile (Only show if battery exists, meaning it's a laptop)
+if data["battery"]["exists"]:
+    try:
+        ppd = subprocess.run(["powerprofilesctl", "get"], capture_output=True, text=True)
+        if ppd.returncode == 0:
+            data["power_profile"]["current"] = ppd.stdout.strip()
+            data["power_profile"]["exists"] = True
+    except Exception:
+        pass
 
 print(json.dumps(data))
