@@ -1853,8 +1853,8 @@ PanelWindow {
                         Row {
     anchors.centerIn: parent
     spacing: 8
-    Icon { source: "icons/bluetooth.svg"; color: window.btPowered ? "white" : "#88ffffff"; size: 12; anchors.verticalCenter: parent.verticalCenter }
-    Text { text: { if (window.btConnected) return (window.btDevice ? window.btDevice : "Connected"); if (window.btPowered) return "Bluetooth On"; return "Bluetooth Off"; } color: window.btPowered ? "white" : "#88ffffff"; font.pixelSize: 12; font.bold: true; anchors.verticalCenter: parent.verticalCenter }
+    Icon { source: "icons/bluetooth.svg"; color: window.btPowered ? "white" : "#88ffffff"; size: 14; anchors.verticalCenter: parent.verticalCenter }
+    Text { text: { if (window.btConnected) return (window.btDevice ? window.btDevice : "Connected"); if (window.btPowered) return "Bluetooth On"; return "Bluetooth Off"; } color: window.btPowered ? "white" : "#88ffffff"; font.pixelSize: 14; font.bold: true; anchors.verticalCenter: parent.verticalCenter }
 }
                         
                         MouseArea {
