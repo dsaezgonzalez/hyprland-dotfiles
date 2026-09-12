@@ -15,13 +15,13 @@ Item {
         source: root.source
         sourceSize: Qt.size(root.size, root.size)
         anchors.fill: parent
-        visible: root.color.toString() === "#ffffff" // If it's already white, don't overlay. (SVGs are white)
+        visible: false // If it's already white, don't overlay. (SVGs are white)
     }
     
     ColorOverlay {
         anchors.fill: img
         source: img
         color: root.color
-        visible: root.color.toString() !== "#ffffff"
+        visible: true
     }
 }
