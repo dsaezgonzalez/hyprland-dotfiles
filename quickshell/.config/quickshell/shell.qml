@@ -1367,7 +1367,7 @@ PanelWindow {
         }
         
         implicitWidth: 320
-        implicitHeight: 390
+        implicitHeight: hubContent.implicitHeight + 36
         
         Rectangle {
             id: controlHubBox
@@ -1396,7 +1396,9 @@ PanelWindow {
             
             Column {
                 id: hubContent
-                anchors.fill: parent
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
                 anchors.margins: 18
                 spacing: 14
                 
