@@ -5,6 +5,13 @@
 ---- MONITORS ----
 ------------------
 hl.monitor({
+    output   = "eDP-1",
+    mode     = "preferred",
+    position = "auto",
+    scale    = 1,
+})
+
+hl.monitor({
     output   = "DP-1",
     mode     = "2560x1440@180",
     position = "0x0",
