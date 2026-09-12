@@ -627,13 +627,14 @@ PanelWindow {
                     NumberAnimation { duration: 250 }
                 }
                 
-                Icon { source: "icons/clock.svg"; color: "#ffffff"; size: 13 }
+                Icon { source: "icons/clock.svg"; color: "#ffffff"; size: 13; anchors.verticalCenter: parent.verticalCenter }
                 
                 Text {
                     id: clockText
                     color: "#ffffff"
                                         font.pixelSize: 13
                     font.bold: true
+                    anchors.verticalCenter: parent.verticalCenter
                     
                     property string currentTime: ""
                     text: currentTime
@@ -1150,7 +1151,7 @@ PanelWindow {
                             visible: window.btPowered && window.dndActive
                         }
                         
-                        Icon { source: "icons/bell-slash.svg"; color: window.dndActive ? "#ff605c" : "#88ffffff"; size: 15; anchors.verticalCenter: parent.verticalCenter }
+                        Icon { source: "icons/bell-slash.svg"; color: "#ff605c"; size: 15; anchors.verticalCenter: parent.verticalCenter; visible: window.dndActive }
                     }
                 }
             }
@@ -1826,7 +1827,7 @@ PanelWindow {
                         border.width: 1
                         border.color: netBtnMouse.containsMouse ? "#44ffffff" : "transparent"
                         
-                        Row { spacing: 8; Icon { source: "icons/wifi.svg"; color: "white"; size: 14 } Text { text: "Wifi settings"; color: "white"; font.pixelSize: 14; font.bold: true } }
+                        Row { anchors.centerIn: parent; spacing: 8; Icon { source: "icons/wifi.svg"; color: "white"; size: 14; anchors.verticalCenter: parent.verticalCenter } Text { text: "Wifi settings"; color: "white"; font.pixelSize: 14; font.bold: true; anchors.verticalCenter: parent.verticalCenter } }
                         
                         MouseArea {
                             id: netBtnMouse
@@ -1852,8 +1853,8 @@ PanelWindow {
                         Row {
     anchors.centerIn: parent
     spacing: 8
-    Icon { source: "icons/bluetooth.svg"; color: window.btPowered ? "white" : "#88ffffff"; size: 12 }
-    Text { text: { if (window.btConnected) return (window.btDevice ? window.btDevice : "Connected"); if (window.btPowered) return "Bluetooth On"; return "Bluetooth Off"; } color: window.btPowered ? "white" : "#88ffffff"; font.pixelSize: 12; font.bold: true }
+    Icon { source: "icons/bluetooth.svg"; color: window.btPowered ? "white" : "#88ffffff"; size: 12; anchors.verticalCenter: parent.verticalCenter }
+    Text { text: { if (window.btConnected) return (window.btDevice ? window.btDevice : "Connected"); if (window.btPowered) return "Bluetooth On"; return "Bluetooth Off"; } color: window.btPowered ? "white" : "#88ffffff"; font.pixelSize: 12; font.bold: true; anchors.verticalCenter: parent.verticalCenter }
 }
                         
                         MouseArea {
@@ -1877,7 +1878,7 @@ PanelWindow {
                         border.width: 1
                         border.color: mixerBtnMouse.containsMouse ? "#44ffffff" : "transparent"
                         
-                        Row { spacing: 8; Icon { source: "icons/headphones.svg"; color: "white"; size: 14 } Text { text: "Audio Mixer"; color: "white"; font.pixelSize: 14; font.bold: true } }
+                        Row { anchors.centerIn: parent; spacing: 8; Icon { source: "icons/headphones.svg"; color: "white"; size: 14; anchors.verticalCenter: parent.verticalCenter } Text { text: "Audio Mixer"; color: "white"; font.pixelSize: 14; font.bold: true; anchors.verticalCenter: parent.verticalCenter } }
                         
                         MouseArea {
                             id: mixerBtnMouse
@@ -1900,7 +1901,7 @@ PanelWindow {
                         border.width: 1
                         border.color: window.dndActive ? "#6600aaff" : (dndBtnMouse.containsMouse ? "#44ffffff" : "transparent")
                         
-                        Row { spacing: 8; Icon { source: window.dndActive ? "icons/bell-slash.svg" : "icons/bell.svg"; color: window.dndActive ? "#ff605c" : "white"; size: 14 } Text { text: window.dndActive ? "DND: On" : "DND: Off"; color: window.dndActive ? "#ff605c" : "white"; font.pixelSize: 14; font.bold: true } }
+                        Row { anchors.centerIn: parent; spacing: 8; Icon { source: window.dndActive ? "icons/bell-slash.svg" : "icons/bell.svg"; color: window.dndActive ? "#ff605c" : "white"; size: 14; anchors.verticalCenter: parent.verticalCenter } Text { text: window.dndActive ? "DND: On" : "DND: Off"; color: window.dndActive ? "#ff605c" : "white"; font.pixelSize: 14; font.bold: true; anchors.verticalCenter: parent.verticalCenter } }
                         
                         MouseArea {
                             id: dndBtnMouse
@@ -2111,7 +2112,7 @@ PanelWindow {
                     width: parent.width
                     height: 24
                     
-                    Row { spacing: 8; Icon { source: "icons/wifi.svg"; color: "white"; size: 16 } Text { text: "Network Connections"; color: "white"; font.pixelSize: 16; font.bold: true } }
+                    Row { anchors.centerIn: parent; spacing: 8; Icon { source: "icons/wifi.svg"; color: "white"; size: 16; anchors.verticalCenter: parent.verticalCenter } Text { text: "Network Connections"; color: "white"; font.pixelSize: 16; font.bold: true; anchors.verticalCenter: parent.verticalCenter } }
                     
                     Item {
                         width: 24
@@ -2610,7 +2611,7 @@ PanelWindow {
                     width: parent.width
                     height: 24
                     
-                    Row { spacing: 8; Icon { source: "icons/bluetooth.svg"; color: "white"; size: 16 } Text { text: "Bluetooth Devices"; color: "white"; font.pixelSize: 16; font.bold: true } }
+                    Row { anchors.centerIn: parent; spacing: 8; Icon { source: "icons/bluetooth.svg"; color: "white"; size: 16; anchors.verticalCenter: parent.verticalCenter } Text { text: "Bluetooth Devices"; color: "white"; font.pixelSize: 16; font.bold: true; anchors.verticalCenter: parent.verticalCenter } }
                     
                     Item {
                         width: 24
