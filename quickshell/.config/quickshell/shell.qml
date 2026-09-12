@@ -627,19 +627,12 @@ PanelWindow {
                     NumberAnimation { duration: 250 }
                 }
                 
-                Text {
-                    text: ""
-                    color: "#ffffff"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
-                    font.bold: true
-                }
+                Icon { source: "icons/clock.svg"; color: "#ffffff"; size: 13 }
                 
                 Text {
                     id: clockText
                     color: "#ffffff"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
+                                        font.pixelSize: 13
                     font.bold: true
                     
                     property string currentTime: ""
@@ -711,8 +704,7 @@ PanelWindow {
                 Text {
                     text: window.sinkVol + "%"
                     color: "#ffffff"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
+                                        font.pixelSize: 13
                     font.bold: true
                     anchors.verticalCenter: parent.verticalCenter
                     width: 35
@@ -731,34 +723,25 @@ PanelWindow {
                     NumberAnimation { duration: 250 }
                 }
                 
-                Text {
-                    text: ""
-                    color: "#ff605c"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
-                    font.bold: true
-                }
+                Icon { source: "icons/bell.svg"; color: "#ff605c"; size: 13 }
                 
                 Text {
                     text: window.notifyAppName ? window.notifyAppName : "System"
                     color: "#ff605c"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
+                                        font.pixelSize: 13
                     font.bold: true
                 }
                 
                 Text {
                     text: "|"
                     color: "#44ffffff"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
+                                        font.pixelSize: 13
                 }
                 
                 Text {
                     text: window.notifySummary + (window.notifyBody ? ": " + window.notifyBody : "")
                     color: "#ffffff"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 13
+                                        font.pixelSize: 13
                     font.bold: true
                     elide: Text.ElideRight
                     width: Math.min(350, implicitWidth)
@@ -882,21 +865,12 @@ PanelWindow {
                     anchors.centerIn: parent
                     spacing: 6
                     
-                    Text {
-                        width: 14
-                        horizontalAlignment: Text.AlignHCenter
-                        text: window.mediaStatus === "Playing" ? "" : ""
-                        color: window.themeAccent
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 13
-                        font.bold: true
-                    }
+                    Icon { source: window.mediaStatus === "Playing" ? "icons/pause.svg" : "icons/play.svg"; color: window.themeAccent; size: 13; width: 14 }
                     
                     Text {
                         text: (window.mediaArtist ? window.mediaArtist + " - " : "") + window.mediaTitle
                         color: "#ffffff"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 13
+                                                font.pixelSize: 13
                         font.bold: true
                         elide: Text.ElideRight
                         width: Math.min(200, implicitWidth)
@@ -987,16 +961,14 @@ PanelWindow {
                                  horizontalAlignment: Text.AlignLeft
                                  text: window.sinkVol + "%"
                                  color: "#ffffff"
-                                 font.family: "JetBrainsMono Nerd Font"
-                                 font.pixelSize: 13
+                                                                  font.pixelSize: 13
                                  font.bold: true
                              }
                             
                             Text {
                                 text: "|"
                                 color: "#44ffffff"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 13
+                                                                font.pixelSize: 13
                             }
                             
                             Item {
@@ -1091,8 +1063,7 @@ PanelWindow {
                                     return "Disconnected";
                                 }
                                 color: (window.netType === "wifi" || window.netType === "ethernet") ? "#ffffff" : "#88ffffff"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 13
+                                                                font.pixelSize: 13
                                 font.bold: true
                             }
                         }
@@ -1130,26 +1101,24 @@ PanelWindow {
                             spacing: 6
                             anchors.verticalCenter: parent.verticalCenter
                             
-                            Text {
-                                text: {
-                                    if (window.laptopBatteryState === "Charging") return "";
-                                    if (window.laptopBatteryPercent > 80) return "";
-                                    if (window.laptopBatteryPercent > 60) return "";
-                                    if (window.laptopBatteryPercent > 40) return "";
-                                    if (window.laptopBatteryPercent > 20) return "";
-                                    return "";
-                                }
-                                color: (window.laptopBatteryPercent < 20 && window.laptopBatteryState !== "Charging") ? "#ff605c" : window.themeAccent
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 15
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
+                            Icon {
+    source: {
+        if (window.laptopBatteryState === "Charging") return "icons/bolt.svg";
+        if (window.laptopBatteryPercent > 80) return "icons/battery-full.svg";
+        if (window.laptopBatteryPercent > 60) return "icons/battery-three-quarters.svg";
+        if (window.laptopBatteryPercent > 40) return "icons/battery-half.svg";
+        if (window.laptopBatteryPercent > 20) return "icons/battery-quarter.svg";
+        return "icons/battery-empty.svg";
+    }
+    color: (window.laptopBatteryPercent < 20 && window.laptopBatteryState !== "Charging") ? "#ff605c" : window.themeAccent
+    size: 15
+    anchors.verticalCenter: parent.verticalCenter
+}
                             
                             Text {
                                 text: window.laptopBatteryPercent + "%"
                                 color: "#ffffff"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 13
+                                                                font.pixelSize: 13
                                 font.bold: true
                                 anchors.verticalCenter: parent.verticalCenter
                             }
@@ -1171,15 +1140,7 @@ PanelWindow {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: window.btPowered || window.dndActive
                         
-                        Text {
-                            text: ""
-                            color: window.btConnected ? "#66cc99" : window.themeAccent
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 13
-                            font.bold: true
-                            visible: window.btPowered
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                        Icon { source: "icons/bluetooth.svg"; color: window.btPowered ? window.themeAccent : "#88ffffff"; size: 15; anchors.verticalCenter: parent.verticalCenter }
                         
                         Rectangle {
                             width: 1
@@ -1189,15 +1150,7 @@ PanelWindow {
                             visible: window.btPowered && window.dndActive
                         }
                         
-                        Text {
-                            text: ""
-                            color: "#ff605c"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 13
-                            font.bold: true
-                            visible: window.dndActive
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                        Icon { source: "icons/bell-slash.svg"; color: window.dndActive ? "#ff605c" : "#88ffffff"; size: 15; anchors.verticalCenter: parent.verticalCenter }
                     }
                 }
             }
@@ -1338,8 +1291,7 @@ PanelWindow {
                             Text {
                                 text: modelData.name
                                 color: "white"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 11
+                                                                font.pixelSize: 11
                                 font.bold: true
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
@@ -1478,8 +1430,7 @@ PanelWindow {
                     Text {
                         text: "System Control Hub"
                         color: "white"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 16
+                                                font.pixelSize: 16
                         font.bold: true
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -1578,8 +1529,7 @@ PanelWindow {
                         Text {
                             text: window.sinkVol + "%"
                             color: "#cccccc"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 13
+                                                        font.pixelSize: 13
                             font.bold: true
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -1595,13 +1545,7 @@ PanelWindow {
                             height: 24
                             anchors.verticalCenter: parent.verticalCenter
                             
-                            Text {
-                                text: window.sourceMuted ? "" : ""
-                                color: "white"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 15
-                                anchors.centerIn: parent
-                            }
+                            Icon { source: window.sourceMuted ? "icons/microphone-slash.svg" : "icons/microphone.svg"; color: "white"; size: 15; anchors.centerIn: parent }
                             
                             MouseArea {
                                 anchors.fill: parent
@@ -1660,8 +1604,7 @@ PanelWindow {
                         Text {
                             text: window.sourceVol + "%"
                             color: "#cccccc"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 13
+                                                        font.pixelSize: 13
                             font.bold: true
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -1678,13 +1621,7 @@ PanelWindow {
                             height: 24
                             anchors.verticalCenter: parent.verticalCenter
                             
-                            Text {
-                                text: ""
-                                color: "white"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 16
-                                anchors.centerIn: parent
-                            }
+                            Icon { source: "icons/sun.svg"; color: "white"; size: 15; anchors.centerIn: parent }
                         }
                         
                         Item {
@@ -1739,8 +1676,7 @@ PanelWindow {
                         Text {
                             text: window.laptopBrightnessPercent + "%"
                             color: "#cccccc"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 13
+                                                        font.pixelSize: 13
                             font.bold: true
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -1762,8 +1698,7 @@ PanelWindow {
                         Text {
                             text: "CPU: " + window.cpuUsage + "%"
                             color: "#cccccc"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 12
+                                                        font.pixelSize: 12
                             font.bold: true
                         }
                         Rectangle {
@@ -1786,8 +1721,7 @@ PanelWindow {
                         Text {
                             text: "RAM: " + window.ramUsage + "%"
                             color: "#cccccc"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 12
+                                                        font.pixelSize: 12
                             font.bold: true
                         }
                         Rectangle {
@@ -1820,8 +1754,7 @@ PanelWindow {
                     Text {
                         text: "Power Profile:"
                         color: "#cccccc"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 12
+                                                font.pixelSize: 12
                         font.bold: true
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -1832,18 +1765,29 @@ PanelWindow {
                         radius: 12
                         color: "#22ffffff"
                         
-                        Text {
-                            anchors.centerIn: parent
-                            text: {
-                                if (window.laptopPowerProfileCurrent === "power-saver") return " Power Saver";
-                                if (window.laptopPowerProfileCurrent === "balanced") return " Balanced";
-                                return " Performance";
-                            }
-                            color: "white"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 12
-                            font.bold: true
-                        }
+                        Row {
+    anchors.centerIn: parent
+    spacing: 8
+    Icon {
+        source: {
+            if (window.laptopPowerProfileCurrent === "power-saver") return "icons/leaf.svg";
+            if (window.laptopPowerProfileCurrent === "balanced") return "icons/scale-balanced.svg";
+            return "icons/bolt.svg";
+        }
+        color: "white"
+        size: 12
+    }
+    Text {
+        text: {
+            if (window.laptopPowerProfileCurrent === "power-saver") return "Power Saver";
+            if (window.laptopPowerProfileCurrent === "balanced") return "Balanced";
+            return "Performance";
+        }
+        color: "white"
+        font.pixelSize: 12
+        font.bold: true
+    }
+}
                         
                         MouseArea {
                             anchors.fill: parent
@@ -1882,17 +1826,7 @@ PanelWindow {
                         border.width: 1
                         border.color: netBtnMouse.containsMouse ? "#44ffffff" : "transparent"
                         
-                        Text {
-                            anchors.centerIn: parent
-                            width: parent.width - 8
-                            elide: Text.ElideRight
-                            horizontalAlignment: Text.AlignHCenter
-                            text: "  Wifi settings"
-                            color: "white"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 12
-                            font.bold: true
-                        }
+                        Row { spacing: 8; Icon { source: "icons/wifi.svg"; color: "white"; size: 14 } Text { text: "Wifi settings"; color: "white"; font.pixelSize: 14; font.bold: true } }
                         
                         MouseArea {
                             id: netBtnMouse
@@ -1915,21 +1849,12 @@ PanelWindow {
                         border.width: 1
                         border.color: window.btConnected ? "#6600aaff" : (btBtnMouse.containsMouse ? "#44ffffff" : "transparent")
                         
-                        Text {
-                            anchors.centerIn: parent
-                            width: parent.width - 8
-                            elide: Text.ElideRight
-                            horizontalAlignment: Text.AlignHCenter
-                            text: {
-                                if (window.btConnected) return "  " + (window.btDevice ? window.btDevice : "Connected");
-                                if (window.btPowered) return "  Bluetooth On";
-                                return "  Bluetooth Off";
-                            }
-                            color: window.btPowered ? "white" : "#88ffffff"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 12
-                            font.bold: true
-                        }
+                        Row {
+    anchors.centerIn: parent
+    spacing: 8
+    Icon { source: "icons/bluetooth.svg"; color: window.btPowered ? "white" : "#88ffffff"; size: 12 }
+    Text { text: { if (window.btConnected) return (window.btDevice ? window.btDevice : "Connected"); if (window.btPowered) return "Bluetooth On"; return "Bluetooth Off"; } color: window.btPowered ? "white" : "#88ffffff"; font.pixelSize: 12; font.bold: true }
+}
                         
                         MouseArea {
                             id: btBtnMouse
@@ -1952,14 +1877,7 @@ PanelWindow {
                         border.width: 1
                         border.color: mixerBtnMouse.containsMouse ? "#44ffffff" : "transparent"
                         
-                        Text {
-                            anchors.centerIn: parent
-                            text: "  Audio Mixer"
-                            color: "white"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 12
-                            font.bold: true
-                        }
+                        Row { spacing: 8; Icon { source: "icons/headphones.svg"; color: "white"; size: 14 } Text { text: "Audio Mixer"; color: "white"; font.pixelSize: 14; font.bold: true } }
                         
                         MouseArea {
                             id: mixerBtnMouse
@@ -1982,14 +1900,7 @@ PanelWindow {
                         border.width: 1
                         border.color: window.dndActive ? "#6600aaff" : (dndBtnMouse.containsMouse ? "#44ffffff" : "transparent")
                         
-                        Text {
-                            anchors.centerIn: parent
-                            text: window.dndActive ? "  DND: On" : "  DND: Off"
-                            color: "white"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 12
-                            font.bold: true
-                        }
+                        Row { spacing: 8; Icon { source: window.dndActive ? "icons/bell-slash.svg" : "icons/bell.svg"; color: window.dndActive ? "#ff605c" : "white"; size: 14 } Text { text: window.dndActive ? "DND: On" : "DND: Off"; color: window.dndActive ? "#ff605c" : "white"; font.pixelSize: 14; font.bold: true } }
                         
                         MouseArea {
                             id: dndBtnMouse
@@ -2024,8 +1935,7 @@ PanelWindow {
                             Text {
                                 text: window.mediaTitle
                                 color: "white"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 12
+                                                                font.pixelSize: 12
                                 font.bold: true
                                 elide: Text.ElideRight
                                 width: 140
@@ -2033,8 +1943,7 @@ PanelWindow {
                             Text {
                                 text: window.mediaArtist
                                 color: "#88ffffff"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 11
+                                                                font.pixelSize: 11
                                 elide: Text.ElideRight
                                 width: 140
                             }
@@ -2048,15 +1957,7 @@ PanelWindow {
                                 width: 24
                                 height: 24
                                 
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: ""
-                                    color: prevMouse.containsMouse ? window.themeAccent : "white"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 14
-                                    font.bold: true
-                                    Behavior on color { ColorAnimation { duration: 150 } }
-                                }
+                                Icon { source: "icons/backward-step.svg"; color: "white"; size: 18; anchors.centerIn: parent }
                                 
                                 MouseArea {
                                     id: prevMouse
@@ -2071,15 +1972,7 @@ PanelWindow {
                                 width: 24
                                 height: 24
                                 
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: window.mediaStatus === "Playing" ? "" : ""
-                                    color: playMouse.containsMouse ? window.themeAccent : "white"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 14
-                                    font.bold: true
-                                    Behavior on color { ColorAnimation { duration: 150 } }
-                                }
+                                Icon { source: window.mediaStatus === "Playing" ? "icons/pause.svg" : "icons/play.svg"; color: "white"; size: 20; anchors.centerIn: parent }
                                 
                                 MouseArea {
                                     id: playMouse
@@ -2094,15 +1987,7 @@ PanelWindow {
                                 width: 24
                                 height: 24
                                 
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: ""
-                                    color: nextMouse.containsMouse ? window.themeAccent : "white"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 14
-                                    font.bold: true
-                                    Behavior on color { ColorAnimation { duration: 150 } }
-                                }
+                                Icon { source: "icons/forward-step.svg"; color: "white"; size: 18; anchors.centerIn: parent }
                                 
                                 MouseArea {
                                     id: nextMouse
@@ -2226,15 +2111,7 @@ PanelWindow {
                     width: parent.width
                     height: 24
                     
-                    Text {
-                        text: "  Network Connections"
-                        color: "white"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 16
-                        font.bold: true
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
+                    Row { spacing: 8; Icon { source: "icons/wifi.svg"; color: "white"; size: 16 } Text { text: "Network Connections"; color: "white"; font.pixelSize: 16; font.bold: true } }
                     
                     Item {
                         width: 24
@@ -2242,15 +2119,7 @@ PanelWindow {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         
-                        Text {
-                            anchors.centerIn: parent
-                            text: ""
-                            color: closeMouse.containsMouse ? "#ff605c" : "#88ffffff"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 16
-                            
-                            Behavior on color { ColorAnimation { duration: 150 } }
-                        }
+                        Icon { source: "icons/xmark.svg"; color: "white"; size: 16; anchors.centerIn: parent }
                         
                         MouseArea {
                             id: closeMouse
@@ -2276,8 +2145,7 @@ PanelWindow {
                     Text {
                         text: "Wi-Fi Power"
                         color: "white"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 12
+                                                font.pixelSize: 12
                         font.bold: true
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
@@ -2333,8 +2201,7 @@ PanelWindow {
                 Text {
                     text: window.wifiError
                     color: "#ff605c"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 12
+                                        font.pixelSize: 12
                     font.bold: true
                     visible: window.wifiError !== ""
                     width: parent.width
@@ -2383,36 +2250,17 @@ PanelWindow {
                                 width: parent.width
                                 spacing: 10
                                 
-                                Text {
-                                    text: ""
-                                    color: {
-                                        if (modelData.active) return "#66cc99";
-                                        if (modelData.signal > 75) return "#66cc99";
-                                        if (modelData.signal > 50) return "#f39c12";
-                                        return "#e74c3c";
-                                    }
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 14
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
+                                Icon { source: "icons/wifi.svg"; color: { if (modelData.active) return "#66cc99"; if (modelData.signal > 75) return "#66cc99"; if (modelData.signal > 50) return "#f39c12"; return "#e74c3c"; } size: 14; anchors.verticalCenter: parent.verticalCenter }
                                 
                                 Text {
                                     text: modelData.ssid
                                     color: "white"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 13
+                                                                        font.pixelSize: 13
                                     font.bold: true
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
                                 
-                                Text {
-                                    text: ""
-                                    color: "#88ffffff"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 11
-                                    visible: modelData.security !== "none"
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
+                                Icon { source: "icons/lock.svg"; color: "#88ffffff"; size: 12; anchors.verticalCenter: parent.verticalCenter; visible: modelData.secure }
                                 
                                 Rectangle {
                                     height: 16
@@ -2426,8 +2274,7 @@ PanelWindow {
                                         anchors.centerIn: parent
                                         text: "Connected"
                                         color: "#66cc99"
-                                        font.family: "JetBrainsMono Nerd Font"
-                                        font.pixelSize: 9
+                                                                                font.pixelSize: 9
                                         font.bold: true
                                     }
                                 }
@@ -2455,15 +2302,13 @@ PanelWindow {
                                         anchors.rightMargin: 8
                                         verticalAlignment: TextInput.AlignVCenter
                                         color: "white"
-                                        font.family: "JetBrainsMono Nerd Font"
-                                        font.pixelSize: 11
+                                                                                font.pixelSize: 11
                                         echoMode: TextInput.Password
                                         
                                         Text {
                                             text: modelData.saved ? "Saved (enter to change)..." : "Enter password..."
                                             color: "#66ffffff"
-                                            font.family: "JetBrainsMono Nerd Font"
-                                            font.pixelSize: 11
+                                                                                        font.pixelSize: 11
                                             visible: !pwdInput.text && !pwdInput.activeFocus
                                             anchors.verticalCenter: parent.verticalCenter
                                         }
@@ -2480,8 +2325,7 @@ PanelWindow {
                                         anchors.centerIn: parent
                                         text: "Connect"
                                         color: "white"
-                                        font.family: "JetBrainsMono Nerd Font"
-                                        font.pixelSize: 11
+                                                                                font.pixelSize: 11
                                         font.bold: true
                                     }
                                     
@@ -2521,8 +2365,7 @@ PanelWindow {
                                         anchors.centerIn: parent
                                         text: "Forget"
                                         color: "#ff605c"
-                                        font.family: "JetBrainsMono Nerd Font"
-                                        font.pixelSize: 11
+                                                                                font.pixelSize: 11
                                         font.bold: true
                                     }
                                     
@@ -2562,8 +2405,7 @@ PanelWindow {
                                         anchors.centerIn: parent
                                         text: "Disconnect"
                                         color: "#ff605c"
-                                        font.family: "JetBrainsMono Nerd Font"
-                                        font.pixelSize: 11
+                                                                                font.pixelSize: 11
                                         font.bold: true
                                     }
                                     
@@ -2608,8 +2450,7 @@ PanelWindow {
                                         anchors.centerIn: parent
                                         text: "Reveal Pwd"
                                         color: window.themeAccent
-                                        font.family: "JetBrainsMono Nerd Font"
-                                        font.pixelSize: 11
+                                                                                font.pixelSize: 11
                                         font.bold: true
                                     }
                                     
@@ -2669,28 +2510,12 @@ PanelWindow {
                     anchors.centerIn: parent
                     spacing: 16
                     
-                    Text {
-                        id: spinnerIcon
-                        text: ""
-                        color: window.themeAccent
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 32
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        
-                        NumberAnimation on rotation {
-                            from: 0
-                            to: 360
-                            duration: 1000
-                            running: window.connectingSsid !== ""
-                            loops: Animation.Infinite
-                        }
-                    }
+                    Icon { source: "icons/spinner.svg"; color: "white"; size: 20; anchors.centerIn: parent; RotationAnimation on rotation { loops: Animation.Infinite; from: 0; to: 360; duration: 1000; running: true } }
                     
                     Text {
                         text: "Connecting to " + window.connectingSsid + "..."
                         color: "white"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 14
+                                                font.pixelSize: 14
                         font.bold: true
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -2785,15 +2610,7 @@ PanelWindow {
                     width: parent.width
                     height: 24
                     
-                    Text {
-                        text: "  Bluetooth Devices"
-                        color: "white"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 16
-                        font.bold: true
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
+                    Row { spacing: 8; Icon { source: "icons/bluetooth.svg"; color: "white"; size: 16 } Text { text: "Bluetooth Devices"; color: "white"; font.pixelSize: 16; font.bold: true } }
                     
                     Item {
                         width: 24
@@ -2801,15 +2618,7 @@ PanelWindow {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         
-                        Text {
-                            anchors.centerIn: parent
-                            text: ""
-                            color: btCloseMouse.containsMouse ? "#ff605c" : "#88ffffff"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 16
-                            
-                            Behavior on color { ColorAnimation { duration: 150 } }
-                        }
+                        Icon { source: "icons/xmark.svg"; color: "white"; size: 16; anchors.centerIn: parent }
                         
                         MouseArea {
                             id: btCloseMouse
@@ -2835,8 +2644,7 @@ PanelWindow {
                     Text {
                         text: "Bluetooth Power"
                         color: "white"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 12
+                                                font.pixelSize: 12
                         font.bold: true
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
@@ -2892,8 +2700,7 @@ PanelWindow {
                 Text {
                     text: window.bluetoothError
                     color: "#ff605c"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 12
+                                        font.pixelSize: 12
                     font.bold: true
                     visible: window.bluetoothError !== ""
                     width: parent.width
@@ -2933,19 +2740,12 @@ PanelWindow {
                             anchors.rightMargin: 12
                             spacing: 12
                             
-                            Text {
-                                text: ""
-                                color: modelData.connected ? "#66cc99" : (modelData.paired ? window.themeAccent : "#88ffffff")
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 16
-                                Layout.alignment: Qt.AlignVCenter
-                            }
+                            Icon { source: "icons/bluetooth.svg"; color: modelData.connected ? window.themeAccent : "white"; size: 14; anchors.verticalCenter: parent.verticalCenter }
                             
                             Text {
                                 text: modelData.name
                                 color: "white"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 13
+                                                                font.pixelSize: 13
                                 font.bold: true
                                 elide: Text.ElideRight
                                 Layout.fillWidth: true
@@ -2964,8 +2764,7 @@ PanelWindow {
                                     anchors.centerIn: parent
                                     text: modelData.connected ? "Connected" : "Paired"
                                     color: modelData.connected ? "#66cc99" : "#cccccc"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 9
+                                                                        font.pixelSize: 9
                                     font.bold: true
                                 }
                             }
@@ -3002,27 +2801,12 @@ PanelWindow {
                     anchors.centerIn: parent
                     spacing: 16
                     
-                    Text {
-                        text: ""
-                        color: window.themeAccent
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 32
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        
-                        NumberAnimation on rotation {
-                            from: 0
-                            to: 360
-                            duration: 1000
-                            running: window.connectingBluetoothDevice !== ""
-                            loops: Animation.Infinite
-                        }
-                    }
+                    Icon { source: "icons/spinner.svg"; color: "white"; size: 20; anchors.centerIn: parent; RotationAnimation on rotation { loops: Animation.Infinite; from: 0; to: 360; duration: 1000; running: true } }
                     
                     Text {
                         text: "Connecting to " + window.connectingBluetoothDevice + "..."
                         color: "white"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 14
+                                                font.pixelSize: 14
                         font.bold: true
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -3151,33 +2935,19 @@ PanelWindow {
                             anchors.rightMargin: 20
                             text: (hasData && itemData) ? itemData.text : ""
                             color: "#e5ffffff"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 11
+                                                        font.pixelSize: 11
                             wrapMode: Text.Wrap
                             elide: Text.ElideRight
                             maximumLineCount: 3
                         }
                         
-                        Text {
-                            anchors {
-                                top: parent.top
-                                right: parent.right
-                                topMargin: 6
-                                rightMargin: 6
-                            }
-                            text: ""
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 10
-                            color: (hasData && itemData && itemData.pinned) ? window.themeAccent : "#44ffffff"
-                            visible: hasData && itemData && (itemData.pinned || cellMouse.containsMouse)
-                        }
+                        Icon { source: "icons/thumbtack.svg"; color: (hasData && itemData && itemData.pinned) ? window.themeAccent : "#44ffffff"; size: 10; anchors.top: parent.top; anchors.right: parent.right; anchors.topMargin: 6; anchors.rightMargin: 6; visible: hasData && itemData && (itemData.pinned || cellMouse.containsMouse) }
                         
                         Text {
                             anchors.centerIn: parent
                             text: "Empty"
                             color: "#15ffffff"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 11
+                                                        font.pixelSize: 11
                             visible: !hasData
                         }
                         
